@@ -14,7 +14,6 @@ export const AccountContract = c.router({
     method: "POST",
     path: "/account",
     body: z.object({
-      name: z.string(),
       email: z.string(),
     }),
     responses: {

@@ -27,7 +27,6 @@
     // Path aliases
     "baseUrl": ".",
     "paths": {
-      "@/types/*": ["types/*"],
       "@waffles/types": ["types"],
       "@waffles/types/*": ["types/*"]
     }

@@ -4,7 +4,7 @@ export type RequestContext = {
   userId: string;
 };
 
-const requestContext = new AsyncLocalStorage<RequestContext>();
+export const requestContext = new AsyncLocalStorage<RequestContext>();
 
 export const getRequestContext = () => {
   const ctx = requestContext.getStore();

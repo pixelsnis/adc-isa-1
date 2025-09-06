@@ -24,7 +24,7 @@ const AccountResolvers = s.router(AccountContract, {
 
   create: async (ctx) => {
     const { userId } = getRequestContext();
-    const { name, email } = ctx.body;
+    const { email } = ctx.body;
 
     // Check if user already exists
     const existingUser = await prisma.user.findUnique({
@@ -41,7 +41,6 @@ const AccountResolvers = s.router(AccountContract, {
     const newUser = await prisma.user.create({
       data: {
         id: userId,
-        name,
         email,
       },
     });

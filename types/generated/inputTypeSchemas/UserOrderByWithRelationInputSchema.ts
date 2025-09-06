@@ -6,8 +6,8 @@ import { UserNoteOrderByRelationAggregateInputSchema } from './UserNoteOrderByRe
 
 export const UserOrderByWithRelationInputSchema: z.ZodType<Prisma.UserOrderByWithRelationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
-  name: z.lazy(() => SortOrderSchema).optional(),
   email: z.lazy(() => SortOrderSchema).optional(),
+  joinedAt: z.lazy(() => SortOrderSchema).optional(),
   notes: z.lazy(() => UserNoteOrderByRelationAggregateInputSchema).optional()
 }).strict();
 

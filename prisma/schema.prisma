@@ -17,9 +17,9 @@ generator zod {
 }
 
 model User {
-    id    String @id @default(uuid())
-    name  String
-    email String @unique
+    id       String   @id
+    email    String   @unique
+    joinedAt DateTime @default(now())
 
     // ** Relations **
     notes UserNote[]
