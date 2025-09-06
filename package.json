@@ -1,0 +1,25 @@
+{
+  "name": "isa-1",
+  "module": "index.ts",
+  "private": true,
+  "workspaces": [
+    "app",
+    "server",
+    "contract",
+    "types"
+  ],
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "type": "module",
+  "dependencies": {
+    "@prisma/client": "^6.15.0",
+    "@ts-rest/core": "^3.52.1",
+    "ai": "^5.0.34",
+    "zod": "^3.22.3",
+    "zod-prisma-types": "^3.2.4"
+  }
+}

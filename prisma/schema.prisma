@@ -1,0 +1,36 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider        = "prisma-client-js"
+    output          = "../node_modules/.prisma/client"
+    binaryTargets   = ["native", "linux-arm64-openssl-1.1.x"]
+    previewFeatures = ["postgresqlExtensions"]
+}
+
+generator zod {
+    provider         = "zod-prisma-types"
+    output           = "../types/generated"
+    useMultipleFiles = true
+}
+
+model User {
+    id    String @id @default(uuid())
+    name  String
+    email String @unique
+
+    // ** Relations **
+    notes UserNote[]
+}
+
+model UserNote {
+    id        String   @id @default(uuid())
+    content   String
+    createdAt DateTime @default(now())
+
+    // ** Relations **
+    userId String
+    user   User   @relation(fields: [userId], references: [id])
+}
