@@ -1,7 +1,7 @@
 import { s, prisma } from "@/init";
 import { NotesContract } from "@waffles/contract";
 import { getRequestContext } from "../lib/request-context";
-import { memory } from "lib/memory";
+import { memory } from "src/lib/memory";
 
 const NotesResolver = s.router(NotesContract, {
   add: async (ctx) => {

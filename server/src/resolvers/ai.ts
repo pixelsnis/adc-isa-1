@@ -5,7 +5,7 @@ import { generateText, stepCountIs, tool, type ModelMessage } from "ai";
 import { openai } from "@ai-sdk/openai";
 import z from "zod";
 import type { MemoryItem } from "mem0ai/oss";
-import { memory } from "lib/memory";
+import { memory } from "src/lib/memory";
 
 const systemPrompt = `
 You are a helpful assistant named Waffles.
