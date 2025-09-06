@@ -7,6 +7,10 @@ export { AIContract } from "./definitions/ai";
 export { AccountContract } from "./definitions/account";
 export { NotesContract } from "./definitions/notes";
 
+/**
+ * Aggregated contract that maps top-level namespaces to their contracts.
+ * This is the single source of truth used by `server` to generate endpoints.
+ */
 const Contract = c.router({
   ai: AIContract,
   account: AccountContract,

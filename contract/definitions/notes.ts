@@ -2,6 +2,11 @@ import z from "zod";
 import c from "../init";
 import { UserNoteSchema } from "@waffles/types";
 
+/**
+ * Notes contract describing add and list operations.
+ * - add: requires a `content` string in the body and returns the created note
+ * - list: returns an array of notes for the authenticated user
+ */
 export const NotesContract = c.router({
   add: {
     method: "POST",

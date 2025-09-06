@@ -3,11 +3,21 @@ import { NotesContract } from "@waffles/contract";
 import { getRequestContext } from "../lib/request-context";
 import { memory } from "src/lib/memory";
 
+/**
+ * Resolver for notes endpoints. Supports adding a note (which persists to the
+ * database and also adds the content to the memory graph) and listing notes.
+ */
 const NotesResolver = s.router(NotesContract, {
+  /**
+   * POST /notes - create a new note for the authenticated user
+   * - Persists to the `userNote` table and also adds the note to the
+   *   memory service so the AI can search it later.
+   */
   add: async (ctx) => {
     const { userId } = getRequestContext();
     const { content } = ctx.body;
 
+    // Persist note in the relational database
     const newNote = await prisma.userNote.create({
       data: {
         content,
@@ -15,6 +25,7 @@ const NotesResolver = s.router(NotesContract, {
       },
     });
 
+    // Also add the raw content to the memory store (graph + vector index)
     await memory.add(content, { userId });
 
     return {
@@ -22,6 +33,10 @@ const NotesResolver = s.router(NotesContract, {
       body: newNote,
     };
   },
+
+  /**
+   * GET /notes - list notes for the authenticated user, ordered by creation time
+   */
   list: async () => {
     const { userId } = getRequestContext();
 
