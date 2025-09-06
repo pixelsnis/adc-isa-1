@@ -42,4 +42,7 @@ app.use("*", async (req, res, next) => {
 // Wire up the ts-rest endpoints from the contract and resolver map
 createExpressEndpoints(Contract, ContractResolver, app);
 
-export default app;
+// Start the server - NOTE: this needs to be changed for production
+app.listen(3000, () => {
+  console.log("Server is running on http://localhost:3000");
+});
