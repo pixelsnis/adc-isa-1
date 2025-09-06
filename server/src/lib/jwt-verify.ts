@@ -2,7 +2,7 @@ import type { Request } from "express";
 import { createRemoteJWKSet, jwtVerify } from "jose";
 
 // Base URL for the Supabase project used for authentication.
-const SUPABASE_URL = "https://xpjuesvglvuiszokgpsl.supabase.co";
+const SUPABASE_URL = "https://ruipsahegjajpshqviry.supabase.co";
 const SUPABASE_JWKS_URL = `${SUPABASE_URL}/auth/v1/.well-known/jwks.json`;
 
 /**

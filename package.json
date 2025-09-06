@@ -14,9 +14,13 @@
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
+  "scripts": {
+    "dev:server": "bun run scripts/server.ts"
+  },
   "type": "module",
   "dependencies": {
     "@prisma/client": "^6.15.0",
+    "@supabase/supabase-js": "^2.57.2",
     "@ts-rest/core": "^3.52.1",
     "ai": "^5.0.34",
     "zod": "^3.22.3",

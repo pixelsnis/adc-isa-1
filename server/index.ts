@@ -21,6 +21,11 @@ app.use(bodyParser.json());
  *   can access the current user via `requestContext`.
  */
 app.use("*", async (req, res, next) => {
+  // Ignore for /account/exists which is public
+  if (req.path === "/account/exists") {
+    return next();
+  }
+
   const user = await validateAuth(req);
 
   // If token validation failed or the token has no subject, reject the request

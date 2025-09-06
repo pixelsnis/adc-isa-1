@@ -36,6 +36,27 @@ const AccountResolvers = s.router(AccountContract, {
   },
 
   /**
+   * Check if a user with the given email exists.
+   * @param ctx - The request context containing the email.
+   * @returns A response indicating whether the user exists.
+   */
+  exists: async (ctx) => {
+    const { email } = ctx.body;
+
+    // Check if a user with the email exists
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    return {
+      status: 200,
+      body: {
+        exists: !!user,
+      },
+    };
+  },
+
+  /**
    * POST /account - create a user record for the authenticated user id
    * - Ensures there isn't already a user with the provided email.
    * @param ctx.body.email - the email address to create

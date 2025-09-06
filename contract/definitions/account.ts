@@ -15,6 +15,18 @@ export const AccountContract = c.router({
       200: UserSchema,
     },
   },
+  exists: {
+    method: "POST",
+    path: "/account/exists",
+    body: z.object({
+      email: z.string().email(),
+    }),
+    responses: {
+      200: z.object({
+        exists: z.boolean(),
+      }),
+    },
+  },
   create: {
     method: "POST",
     path: "/account",

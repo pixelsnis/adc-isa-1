@@ -8,9 +8,6 @@
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
-  "scripts": {
-    "dev:server": "bun run scripts/server.ts"
-  },
   "dependencies": {
     "@ai-sdk/openai": "^2.0.24",
     "@ts-rest/express": "^3.52.1",
