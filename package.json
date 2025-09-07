@@ -13,9 +13,6 @@
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
-  "scripts": {
-    "dev:server": "bun run server/index.ts"
-  },
   "type": "module",
   "dependencies": {
     "@prisma/client": "^6.15.0",
