@@ -1,4 +1,4 @@
-import * as express from "express";
+import express from "express";
 import * as bodyParser from "body-parser";
 import { createExpressEndpoints } from "@ts-rest/express";
 import Contract from "@waffles/contract";
@@ -20,7 +20,7 @@ app.use(bodyParser.json());
  *   runs the rest of the request inside that async context so resolvers
  *   can access the current user via `requestContext`.
  */
-app.use("*", async (req, res, next) => {
+app.use(async (req, res, next) => {
   // Ignore for /account/exists which is public
   if (req.path === "/account/exists") {
     return next();

@@ -1,6 +1,5 @@
 {
   "name": "isa-1",
-  "module": "index.ts",
   "private": true,
   "workspaces": [
     "app",
@@ -15,7 +14,7 @@
     "typescript": "^5.0.0"
   },
   "scripts": {
-    "dev:server": "bun run scripts/server.ts"
+    "dev:server": "bun run server/index.ts"
   },
   "type": "module",
   "dependencies": {
