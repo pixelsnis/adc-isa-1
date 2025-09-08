@@ -3,9 +3,7 @@ import { AIContract } from "@waffles/contract";
 import { getRequestContext } from "../lib/request-context";
 import { generateText, stepCountIs, tool, type ModelMessage } from "ai";
 import { openai } from "@ai-sdk/openai";
-import z from "zod";
-import type { MemoryItem } from "mem0ai/oss";
-import { memory } from "src/lib/memory";
+import VectorStore from "src/lib/vector";
 
 /**
  * System prompt applied to every AI request.
@@ -29,19 +27,6 @@ You help users by answering questions using memories you have stored about them.
 - You are not allowed to answer questions that aren't relevant to memories - for example, you can't answer questions about the weather, write code, etc.
 - If you don't know the answer, just say you don't know. Don't try to make up an answer.
 `;
-
-function generateRandomString(): string {
-  const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let result = "";
-  for (let i = 0; i < 8; i++) {
-    result += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-  return result;
-}
-
-// A trimmed-down memory search result type used for tool outputs
-type MemorySearchResult = Omit<MemoryItem, "hash" | "metadata">;
 
 /**
  * The AI resolver exposes an `ask` endpoint where clients supply messages and
@@ -71,7 +56,11 @@ const AIResolvers = s.router(AIContract, {
         .join("");
     }
 
-    const memories = await memory.search(query, { userId });
+    const searchResults = await VectorStore.similaritySearch(query, 5, {
+      userId: {
+        equals: userId,
+      },
+    });
 
     const history = messages.slice(0, -1);
     const sendable: ModelMessage[] = [
@@ -85,7 +74,7 @@ const AIResolvers = s.router(AIContract, {
           ${query}
 
           Here are some relevant memories you can use to answer the question:
-          ${memories.results.map((m) => m as MemoryItem)}
+          ${JSON.stringify(searchResults.map((r) => r.pageContent))}
           `,
           },
         ],

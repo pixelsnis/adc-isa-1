@@ -1,8 +1,7 @@
 import { s, prisma } from "@/init";
 import { NotesContract } from "@waffles/contract";
 import { getRequestContext } from "../lib/request-context";
-import { memory } from "src/lib/memory";
-import type { UserNote } from "@waffles/types";
+import VectorStore from "src/lib/vector";
 
 /**
  * Resolver for notes endpoints. Supports adding a note (which persists to the
@@ -26,8 +25,11 @@ const NotesResolver = s.router(NotesContract, {
       },
     });
 
-    // Also add the raw content to the memory store (graph + vector index)
-    await memory.add(content, { userId });
+    console.info(`Created new note with ID ${newNote.id}`);
+
+    // Also add the raw content to vector store
+    await VectorStore.addModels([newNote]);
+    console.info(`Added note ID ${newNote.id} to vector store`);
 
     return {
       status: 200,
