@@ -9,6 +9,7 @@ import {
   Keyboard,
 } from "react-native";
 import NoteInputView from "./(components)/NoteInputView";
+import SearchView from "./(components)/SearchView";
 import { useEffect, useState } from "react";
 import NoteGroup from "./(components)/NoteGroup";
 import NotesService from "@/lib/notes";
@@ -116,6 +117,7 @@ export default function Home() {
               )}
             </View>
           </SafeAreaView>
+          <SearchView />
         </View>
       </TouchableWithoutFeedback>
     </>
