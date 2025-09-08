@@ -4,7 +4,9 @@ import { OpenAIEmbeddings } from "@langchain/openai";
 import { Prisma, type UserNote } from "@prisma/client";
 
 const VectorStore = PrismaVectorStore.withModel<UserNote>(prisma).create(
-  new OpenAIEmbeddings(),
+  new OpenAIEmbeddings({
+    model: "text-embedding-3-small",
+  }),
   {
     prisma: Prisma,
     tableName: "UserNote",

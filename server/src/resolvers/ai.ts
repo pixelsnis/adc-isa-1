@@ -1,7 +1,7 @@
 import { s } from "@/init";
 import { AIContract } from "@waffles/contract";
 import { getRequestContext } from "../lib/request-context";
-import { generateText, stepCountIs, tool, type ModelMessage } from "ai";
+import { generateText, type ModelMessage } from "ai";
 import { openai } from "@ai-sdk/openai";
 import VectorStore from "src/lib/vector";
 
@@ -82,7 +82,7 @@ const AIResolvers = s.router(AIContract, {
     ];
 
     const generated = await generateText({
-      model: openai("gpt-4.1-mini"),
+      model: openai("gpt-5-mini"),
       system: systemPrompt,
       messages: sendable,
     });

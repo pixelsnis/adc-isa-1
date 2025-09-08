@@ -1,61 +1,49 @@
 # Waffles
 
+> Waffles is a simple note app that can construct memories around your notes. Add anything in, and ask questions to a language model with the broad context of your entire note base!
+
+## Tech Stack
+
+- Frontend: Expo React Native
+- Backend:
+  - Server: Express with `ts-rest` for typed contract
+  - Authentication: Supabase
+  - Database: Postgres 16 with `pgvector` (run locally through Docker)
+  - ORM: Prisma
+  - LLM: OpenAI `gpt-5-mini`
+  - Embedding: OpenAI `text-embedding-3-small`
+
 ## Getting Started
 
-1. Install dependencies:
+To run Waffles on your machine, you will need the following:
+
+- Bun (https://bun.sh)
+- Docker (https://docker.com)
+- A Supabase project (https://supabase.com)
+
+1. Start by cloning the repo:
 
 ```
-bun i
+git clone https://github.com/pixelsnis/adc-isa-1.git
 ```
 
-2. Start Docker services:
+2. Set up the environment variables - create `.env` files in `/`, `/server` and `/app`, referring to the `.env.example` in each for the correct variables.
 
-```
-docker compose up -d
-```
+3. Run `bun run setup`. This will run the setup script, including database migrations.
 
-3. Generate Prisma client. In monorepo root (/), run:
-
-```
-bunx prisma generate
-```
-
-4. Migrate database. You can name the migration anything when prompted. Run:
-
-```
-bunx prisma migrate dev
-```
-
-5. Shut down the Docker services:
-
-```
-docker compose down
-```
-
-## Running the App
-
-1. To run the app, first, start the Docker services:
+4. Split your terminal into two. In the first, run:
 
 ```
 docker compose up -d
-```
-
-2. Start the server:
-
-```
 cd server
 bun run dev
 ```
 
-3. In a split terminal, start the Expo app:
+5. In the second terminal, run:
 
 ```
 cd app
 bunx expo start
 ```
 
-4. To shut everything down when you're done:
-
-```
-docker compose down
-```
+That's it! Happy Waffling!
