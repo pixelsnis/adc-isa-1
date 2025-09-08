@@ -17,10 +17,11 @@ export default function SearchResult({ loading, messages }: Props) {
   const text = useMemo(() => {
     if (messages.length === 0) return "";
 
-    // Get last assistant message
-    const assistantMessage = [...messages]
-      .reverse()
-      .find((m) => m.role === "assistant");
+    const lastMessage = messages[messages.length - 1];
+    console.info("Last message", lastMessage);
+    if (lastMessage.role !== "assistant") return "";
+
+    const assistantMessage = lastMessage;
 
     // If the content type is string, return it
     if (assistantMessage && typeof assistantMessage.content === "string") {
@@ -33,6 +34,7 @@ export default function SearchResult({ loading, messages }: Props) {
         .map((part) => (part.type == "text" ? part.text : ""))
         .join("");
     }
+
     return "";
   }, [messages]);
 

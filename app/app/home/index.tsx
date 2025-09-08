@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   TouchableWithoutFeedback,
   Keyboard,
+  TouchableOpacity,
 } from "react-native";
 import NoteInputView from "./(components)/NoteInputView";
 import SearchView from "./(components)/SearchView";
@@ -15,6 +16,7 @@ import NoteGroup from "./(components)/NoteGroup";
 import NotesService from "@/lib/notes";
 
 export default function Home() {
+  const [showSearch, setShowSearch] = useState(false);
   const [text, setText] = useState("");
   const [fetching, setFetching] = useState(false);
   const [notes, setNotes] = useState<{ text: string; createdAt: Date }[]>([]);
@@ -33,6 +35,8 @@ export default function Home() {
 
   const onSubmit = async () => {
     if (text.trim() === "") return;
+
+    await NotesService.save({ content: text.trim() });
 
     setNotes((prev) => [{ text: text.trim(), createdAt: new Date() }, ...prev]);
     setText("");
@@ -117,10 +121,39 @@ export default function Home() {
               )}
             </View>
           </SafeAreaView>
-          <SearchView />
+          <View style={styles.askButtonWrapper}>
+            <AskButton onPress={() => setShowSearch(true)} />
+          </View>
+          {showSearch && <SearchView onClose={() => setShowSearch(false)} />}
         </View>
       </TouchableWithoutFeedback>
     </>
+  );
+}
+
+function AskButton({ onPress }: { onPress?: () => void }) {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={0.9}
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        gap: 4,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#FF5E00",
+        borderRadius: 100,
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+      }}
+    >
+      <Text
+        style={{ fontFamily: "Geist_400Regular", color: "#fff", fontSize: 16 }}
+      >
+        Ask Waffles
+      </Text>
+    </TouchableOpacity>
   );
 }
 
@@ -186,5 +219,13 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     gap: 24,
     paddingHorizontal: 16,
+  },
+  askButtonWrapper: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 36,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

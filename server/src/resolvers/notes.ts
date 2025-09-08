@@ -2,6 +2,7 @@ import { s, prisma } from "@/init";
 import { NotesContract } from "@waffles/contract";
 import { getRequestContext } from "../lib/request-context";
 import { memory } from "src/lib/memory";
+import type { UserNote } from "@waffles/types";
 
 /**
  * Resolver for notes endpoints. Supports adding a note (which persists to the

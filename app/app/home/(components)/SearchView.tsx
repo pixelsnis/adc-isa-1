@@ -1,16 +1,27 @@
-import { useState } from "react";
-import { View, StyleSheet, SafeAreaView } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  TouchableWithoutFeedback,
+} from "react-native";
 import SearchInput from "./SearchInput";
 import SearchResult from "./SearchResult";
 import { ModelMessage } from "ai";
-import Animated, { useAnimatedStyle } from "react-native-reanimated";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  Easing,
+} from "react-native-reanimated";
 import AIService from "@/lib/ai";
 
-export default function SearchView() {
+export default function SearchView({ onClose }: { onClose?: () => void }) {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<ModelMessage[]>([]);
 
+  const rootOpacity = useSharedValue(0);
   const resultAnimatedStyle = useAnimatedStyle(() => {
     return {
       opacity: loading || messages.length > 0 ? 1 : 0,
@@ -22,23 +33,39 @@ export default function SearchView() {
     };
   });
 
+  React.useEffect(() => {
+    rootOpacity.value = withTiming(1, {
+      duration: 240,
+      easing: Easing.out(Easing.cubic),
+    });
+    return () => {
+      rootOpacity.value = withTiming(0, { duration: 160 });
+    };
+  }, [rootOpacity]);
+
+  const rootStyle = useAnimatedStyle(() => ({
+    opacity: rootOpacity.value,
+  }));
+
   const onSubmit = async ({ query }: { query: string }) => {
     if (loading) return;
 
     setLoading(true);
 
     try {
-      setMessages((prev) => [
-        ...prev,
+      const newMessages: ModelMessage[] = [
+        ...messages,
         { role: "user", content: [{ type: "text", text: query }] },
-      ]);
+      ];
 
-      const result = await AIService.ask(messages);
+      setQuery("");
+
+      const result = await AIService.ask(newMessages);
       if (!result) {
         throw new Error("No response from AI service");
       }
 
-      setMessages((prev) => [...prev, ...result]);
+      setMessages([...newMessages, ...result]);
     } catch (err) {
       console.error("Failed to submit search", err);
     } finally {
@@ -47,14 +74,18 @@ export default function SearchView() {
   };
 
   return (
-    <View style={styles.overlay}>
-      <SafeAreaView style={styles.safeArea}>
+    <Animated.View style={[styles.overlay, rootStyle]}>
+      <TouchableWithoutFeedback onPress={() => onClose && onClose()}>
+        <View style={StyleSheet.absoluteFill} />
+      </TouchableWithoutFeedback>
+
+      <SafeAreaView style={styles.safeArea} pointerEvents="box-none">
         <Animated.View style={resultAnimatedStyle}>
           <SearchResult loading={loading} messages={messages} />
         </Animated.View>
         <SearchInput query={query} onChange={setQuery} onSubmit={onSubmit} />
       </SafeAreaView>
-    </View>
+    </Animated.View>
   );
 }
 

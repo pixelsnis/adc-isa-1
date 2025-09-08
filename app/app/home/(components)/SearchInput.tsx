@@ -59,6 +59,8 @@ export default function SearchInput({ query, onChange, onSubmit }: Props) {
         onSubmitEditing={() => {
           if (query.trim() !== "") submit();
         }}
+        autoFocus={true}
+        editable={!loading}
       />
 
       <TouchableOpacity

@@ -11,7 +11,7 @@ export const memory = new Memory({
     provider: "openai",
     config: {
       // Model used for generative responses
-      model: "gpt-5-mini-2025-08-07",
+      model: "gpt-4.1-mini-2025-04-14",
       apiKey: process.env.OPENAI_API_KEY,
     },
   },
@@ -29,7 +29,7 @@ export const memory = new Memory({
     llm: {
       provider: "openai",
       config: {
-        model: "gpt-5-mini-2025-08-07",
+        model: "gpt-4.1-mini-2025-04-14",
         apiKey: process.env.OPENAI_API_KEY,
       },
     },
