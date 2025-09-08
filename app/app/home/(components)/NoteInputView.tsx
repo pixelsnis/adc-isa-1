@@ -21,7 +21,7 @@ type Props = {
   onSubmit: () => Promise<void>;
 };
 
-export function NoteInputView(props: Props) {
+export default function NoteInputView(props: Props) {
   const { text, onChange, onSubmit } = props;
   const [loading, setLoading] = useState(false);
 
