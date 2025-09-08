@@ -1,6 +1,6 @@
 import { API } from "../api";
 
-async function saveBit({ content }: { content: string }) {
+async function saveNote({ content }: { content: string }) {
   const client = await API.getClient();
   const saveResponse = await client.notes.add({ body: { content } });
 
@@ -13,4 +13,4 @@ async function saveBit({ content }: { content: string }) {
   return saveResponse.body;
 }
 
-export default saveBit;
+export default saveNote;
