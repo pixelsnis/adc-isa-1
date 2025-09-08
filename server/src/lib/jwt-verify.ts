@@ -1,27 +1,30 @@
 import type { Request } from "express";
-import { createRemoteJWKSet, jwtVerify } from "jose";
+import { jwtVerify } from "jose";
 
 // Base URL for the Supabase project used for authentication.
 const SUPABASE_URL = "https://ruipsahegjajpshqviry.supabase.co";
-const SUPABASE_JWKS_URL = `${SUPABASE_URL}/auth/v1/.well-known/jwks.json`;
 
 /**
- * Verify a Supabase JWT using the project's JWKS endpoint.
- * @param token - raw bearer token string
- * @returns the verified JWT payload
- * @throws when verification fails
+ * Verify a Supabase JWT using the shared JWT secret (HS256) configured in
+ * SUPABASE_JWT_SECRET. This is a simpler approach than using JWKS and works
+ * when the project is configured to sign access tokens with a shared secret.
  */
 async function verifySupabaseToken(token: string) {
-  const JWKS = createRemoteJWKSet(new URL(SUPABASE_JWKS_URL));
+  const secret = process.env.SUPABASE_JWT_SECRET;
+  if (!secret) {
+    console.error("SUPABASE_JWT_SECRET is not configured in the environment");
+    throw new Error("Missing SUPABASE_JWT_SECRET");
+  }
+
+  const key = new TextEncoder().encode(secret);
 
   try {
-    const { payload } = await jwtVerify(token, JWKS, {
+    const { payload } = await jwtVerify(token, key, {
       issuer: `${SUPABASE_URL}/auth/v1`,
       audience: "authenticated",
     });
     return payload;
   } catch (error) {
-    // Log the underlying error for debugging but throw a generic error to callers
     console.error("Supabase token verification failed:", error);
     throw new Error("Invalid Supabase token");
   }
