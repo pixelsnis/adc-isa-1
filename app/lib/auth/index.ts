@@ -24,8 +24,7 @@ const signInWithEmail = async (email: string, password: string) => {
   // If the account doesn't exist, create it and make the account
   if (!exists) {
     console.info("Auth: account does not exist, signing up", { email });
-    const signUpRes = await supabase.auth.signUp({ email, password });
-    console.info("Auth.signUpRes", signUpRes);
+    await supabase.auth.signUp({ email, password });
 
     client = await API.getClient({ authenticated: true });
 
@@ -48,8 +47,7 @@ const signInWithEmail = async (email: string, password: string) => {
 
   // If the account exists, sign in
   console.info("Auth: account exists, signing in", { email });
-  const signInRes = await supabase.auth.signInWithPassword({ email, password });
-  console.info("Auth.signInRes", signInRes);
+  await supabase.auth.signInWithPassword({ email, password });
 
   client = await API.getClient({ authenticated: true });
 
