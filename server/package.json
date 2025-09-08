@@ -13,12 +13,13 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^2.0.24",
+    "@langchain/community": "^0.3.55",
+    "@langchain/core": "^0.3.75",
     "@ts-rest/express": "^3.52.1",
     "@types/express": "^5.0.3",
     "@waffles/contract": "file:../contract",
     "@waffles/types": "file:../types",
     "express": "^5.1.0",
-    "jose": "^6.1.0",
-    "mem0ai": "^2.1.38"
+    "jose": "^6.1.0"
   }
 }

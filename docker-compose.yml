@@ -10,17 +10,6 @@ services:
       - db_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-  neo4j:
-    image: neo4j:latest
-    restart: unless-stopped
-    environment:
-      NEO4J_AUTH: ${NEO4J_AUTH}
-    volumes:
-      - neo4j_data:/data
-    ports:
-      - "7474:7474"
-      - "7687:7687"
 
 volumes:
   db_data:
-  neo4j_data:
