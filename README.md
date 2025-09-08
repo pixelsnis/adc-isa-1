@@ -2,6 +2,8 @@
 
 > Waffles is a simple note app that can construct memories around your notes. Add anything in, and ask questions to a language model with the broad context of your entire note base!
 
+https://github.com/user-attachments/assets/5f4d2cb5-8aa1-4c44-96ee-170502783b33
+
 ## Tech Stack
 
 - Frontend: Expo React Native
