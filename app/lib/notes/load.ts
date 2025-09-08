@@ -1,6 +1,6 @@
 import { API } from "../api";
 
-async function loadBits() {
+async function loadNotes() {
   const client = await API.getClient();
 
   const listResponse = await client.notes.list();
@@ -13,4 +13,4 @@ async function loadBits() {
   return listResponse.body;
 }
 
-export default loadBits;
+export default loadNotes;

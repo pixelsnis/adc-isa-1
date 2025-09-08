@@ -1,9 +1,9 @@
 import saveBit from "./save";
 import loadBits from "./load";
 
-const BitsService = {
+const NotesService = {
   save: saveBit,
   load: loadBits,
 };
 
-export default BitsService;
+export default NotesService;
