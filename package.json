@@ -13,6 +13,9 @@
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
+  "scripts": {
+    "setup": "bun ./scripts/setup.ts"
+  },
   "type": "module",
   "dependencies": {
     "@prisma/client": "^6.15.0",
