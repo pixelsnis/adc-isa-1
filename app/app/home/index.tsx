@@ -5,6 +5,8 @@ import {
   Text,
   SafeAreaView,
   ActivityIndicator,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import NoteInputView from "./(components)/NoteInputView";
 import { useEffect, useState } from "react";
@@ -42,78 +44,80 @@ export default function Home() {
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
-      <View style={styles.container}>
-        {/* Content View */}
-        <SafeAreaView>
-          <View style={styles.contentView}>
-            <View style={{ height: 16 }} />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={styles.container}>
+          {/* Content View */}
+          <SafeAreaView>
+            <View style={styles.contentView}>
+              <View style={{ height: 16 }} />
 
-            <View
-              style={{
-                alignItems: "stretch",
-                justifyContent: "flex-start",
-                gap: 16,
-              }}
-            >
-              <Text style={{ fontSize: 36, fontFamily: "PTSerif_700Bold" }}>
-                Notes
-              </Text>
-
-              {/* Input field */}
-              <NoteInputView
-                text={text}
-                onChange={setText}
-                onSubmit={onSubmit}
-              />
-            </View>
-
-            {/* Divider */}
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                gap: 6,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              {[...Array(3)].map((_, idx) => (
-                <View
-                  key={idx}
-                  style={{
-                    height: 6,
-                    width: 6,
-                    borderRadius: 3,
-                    backgroundColor: "#ccc",
-                  }}
-                />
-              ))}
-            </View>
-
-            {/* Notes */}
-            {notes.length === 0 ? null : (
               <View
-                style={{ display: "flex", flexDirection: "column", gap: 16 }}
+                style={{
+                  alignItems: "stretch",
+                  justifyContent: "flex-start",
+                  gap: 16,
+                }}
               >
-                {groupNotesByDay(notes).map((group) => (
-                  <NoteGroup
-                    key={group.key}
-                    title={group.title}
-                    notes={group.notes}
+                <Text style={{ fontSize: 36, fontFamily: "PTSerif_700Bold" }}>
+                  Notes
+                </Text>
+
+                {/* Input field */}
+                <NoteInputView
+                  text={text}
+                  onChange={setText}
+                  onSubmit={onSubmit}
+                />
+              </View>
+
+              {/* Divider */}
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: 6,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {[...Array(3)].map((_, idx) => (
+                  <View
+                    key={idx}
+                    style={{
+                      height: 6,
+                      width: 6,
+                      borderRadius: 3,
+                      backgroundColor: "#ccc",
+                    }}
                   />
                 ))}
               </View>
-            )}
-          </View>
 
-          {/* Loader */}
-          {fetching && (
-            <View>
-              <ActivityIndicator size="small" />
+              {/* Notes */}
+              {notes.length === 0 ? null : (
+                <View
+                  style={{ display: "flex", flexDirection: "column", gap: 16 }}
+                >
+                  {groupNotesByDay(notes).map((group) => (
+                    <NoteGroup
+                      key={group.key}
+                      title={group.title}
+                      notes={group.notes}
+                    />
+                  ))}
+                </View>
+              )}
+
+              {/* Loader */}
+              {fetching && (
+                <View>
+                  <ActivityIndicator size="small" />
+                </View>
+              )}
             </View>
-          )}
-        </SafeAreaView>
-      </View>
+          </SafeAreaView>
+        </View>
+      </TouchableWithoutFeedback>
     </>
   );
 }
